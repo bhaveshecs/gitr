@@ -1,0 +1,67 @@
+---
+title: "datamaticshtml"
+author: "bhavesh"
+date: "21 June 2017"
+output:
+  html_document: default
+---
+
+#As our data is in "xlsx" file, installing xlsx package to read the data. Also verifying the installation.
+
+```{r}
+install.packages("xlsx")
+any(grepl("xlsx",installed.packages()))
+```
+
+
+#Now Reading data, as our required data is in sheet 2, reading sheet 2 into "datasem" candidate on seminar 04-june
+
+```{r}
+library("xlsx")
+datasem<-read.xlsx("data.xlsx", sheetIndex = 2, startRow = 1, endRow = 45, header = TRUE)
+datasem
+```
+
+
+#creating dotchart which says candidate belongs to which category in terms of experience
+```{r, INCLUDE = FALSE}
+library(stats)
+attach(datasem)
+xpr1<-(datasem$Exp)
+m<-mean(xpr1, na.rm = TRUE)
+m
+#d1<-dotchart(xpr1,labels = "Seminar on 04 June", xlab = "Experience in Years", ylab = "Candidates", bg = par("bg"))
+#d1
+```
+
+#reading data from sheet 3, seminar on 10-june
+
+```{r}
+datasem2<-read.xlsx("data.xlsx", sheetIndex = 3, startRow = 1, endRow = 12, header = TRUE)
+datasem2
+```
+
+```{r}
+attach(datasem2)
+xpr2<-(datasem2$Exp)
+d2<-dotchart(xpr2, labels = "Seminar on 10th June", xlab = "Experience in Years", ylab = "Candidates")
+d2
+```
+
+
+# comparison graph between number of candidates belong to number experience in two seminars 
+```{r}
+par(mfrow=c(2,1))
+dotchart(xpr1,labels = "Seminar on 04 June", xlab = "Experience in Years", ylab = "C", bg = par("bg"))
+dotchart(xpr2, labels = "Seminar on 10th June", xlab = "Experience in Years", ylab = "C")
+```
+
+
+#categorical data
+```{r}
+datasem3<-read.xlsx("data.xlsx", sheetIndex = 2, startRow = 1, endRow = 45, colIndex = 6, header = TRUE)
+datasem3m<-table(datasem3)
+datasem3m
+hist(datasem3m)
+```
+
